@@ -18,6 +18,42 @@ namespace WinFormsApp1
             int empSalary = Convert.ToInt32(txtSalary.Text);
             string empCity = txtCity.Text;
 
+            if (IsAlreadyExit(empId))
+            {
+                MessageBox.Show("Employee already exit!");
+            }
+            else
+            {
+                AddEmployee(empId, empName, empSalary, empCity);
+                MessageBox.Show("Add Successful!");
+            }
+        }
+
+        private bool IsAlreadyExit(string id)
+        {
+            SqlConnection connection = new SqlConnection(connectionString);
+            try
+            {
+                connection.Open();
+                string query = "SELECT COUNT(*) FROM EmployeeDetails WHERE empId = @empId";
+                SqlCommand command = new SqlCommand(query, connection);
+                //Add Parameter
+                command.Parameters.AddWithValue("@empId", id);
+
+                // Execute the query
+                int count = Convert.ToInt32(command.ExecuteScalar());
+                return count > 0;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+            finally { connection.Close(); }
+            return false;
+        }
+
+        private void AddEmployee(string id, string name, int salary, string city)
+        {
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 try
@@ -29,10 +65,10 @@ namespace WinFormsApp1
                     using (SqlCommand command = new SqlCommand(insertQuery, connection))
                     {
                         // Add parameters
-                        command.Parameters.AddWithValue("@empId", empId);
-                        command.Parameters.AddWithValue("@empName", empName);
-                        command.Parameters.AddWithValue("@empSalary", empSalary);
-                        command.Parameters.AddWithValue("@empCity", empCity);
+                        command.Parameters.AddWithValue("@empId", id);
+                        command.Parameters.AddWithValue("@empName", name);
+                        command.Parameters.AddWithValue("@empSalary", salary);
+                        command.Parameters.AddWithValue("@empCity", city);
 
                         // Execute the query
                         command.ExecuteNonQuery();
