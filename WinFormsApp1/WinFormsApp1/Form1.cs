@@ -20,12 +20,15 @@ namespace WinFormsApp1
 
             if (IsAlreadyExit(empId))
             {
-                MessageBox.Show("Employee already exit!");
+                MessageBox.Show("Employee already exit!");               
+                txtId.Focus();
             }
             else
             {
                 AddEmployee(empId, empName, empSalary, empCity);
                 MessageBox.Show("Add Successful!");
+                ClearField();
+                txtId.Focus();
             }
         }
 
@@ -67,12 +70,13 @@ namespace WinFormsApp1
                         // Add parameters
                         command.Parameters.AddWithValue("@empId", id);
                         command.Parameters.AddWithValue("@empName", name);
+                       
                         command.Parameters.AddWithValue("@empSalary", salary);
                         command.Parameters.AddWithValue("@empCity", city);
 
                         // Execute the query
                         command.ExecuteNonQuery();
-                        Application.Exit();
+                        //Application.Exit();
                     }
                 }
                 catch (Exception ex)
@@ -84,6 +88,14 @@ namespace WinFormsApp1
                     connection.Close();
                 }
             }
+        }
+
+        private void ClearField()
+        {
+            txtId.Text = string.Empty;
+            txtName.Text = string.Empty;
+            txtSalary.Text = string.Empty;
+            txtCity.Text = string.Empty;
         }
     }
 }
