@@ -1,3 +1,4 @@
+using System.Data;
 using System.Data.SqlClient;
 
 namespace WinFormsApp1
@@ -9,6 +10,9 @@ namespace WinFormsApp1
         public EmployeeForm()
         {
             InitializeComponent();
+            DataTable dt = GetDataFromDB();
+            EmployeedataGridView.AutoGenerateColumns = false; 
+            EmployeedataGridView.DataSource = dt;
         }
 
         private void btnSave_Click(object sender, EventArgs e)
@@ -96,6 +100,23 @@ namespace WinFormsApp1
             txtName.Text = string.Empty;
             txtSalary.Text = string.Empty;
             txtCity.Text = string.Empty;
+        }
+
+        private DataTable GetDataFromDB()
+        {
+            DataTable dt = new DataTable();
+            SqlConnection connection = new SqlConnection(connectionString);
+            try
+            {
+                connection.Open();
+                string query = "select * from EmployeeDetails";
+                SqlDataAdapter adapter = new SqlDataAdapter(query,connection);
+                adapter.Fill(dt);
+                return dt;
+            }
+            catch (Exception ex) { Console.WriteLine(ex.Message); }
+            finally { connection.Close(); }
+            return dt;
         }
     }
 }

@@ -28,6 +28,10 @@
         /// </summary>
         private void InitializeComponent()
         {
+            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle4 = new DataGridViewCellStyle();
             EmpInfoPanel = new Panel();
             txtCity = new TextBox();
             txtSalary = new TextBox();
@@ -45,6 +49,10 @@
             txtSearchId = new TextBox();
             label2 = new Label();
             EmployeedataGridView = new DataGridView();
+            EmpId = new DataGridViewTextBoxColumn();
+            EmpName = new DataGridViewTextBoxColumn();
+            EmpSalary = new DataGridViewTextBoxColumn();
+            EmpCity = new DataGridViewTextBoxColumn();
             EmpInfoPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)EmployeedataGridView).BeginInit();
             SuspendLayout();
@@ -143,11 +151,11 @@
             label1.AutoSize = true;
             label1.Font = new Font("Segoe UI", 24F, FontStyle.Bold, GraphicsUnit.Point);
             label1.ForeColor = Color.White;
-            label1.Location = new Point(204, 9);
+            label1.Location = new Point(262, 9);
             label1.Name = "label1";
-            label1.Size = new Size(481, 54);
+            label1.Size = new Size(349, 54);
             label1.TabIndex = 1;
-            label1.Text = "Employee Management ";
+            label1.Text = "Employee Record";
             // 
             // btnSave
             // 
@@ -208,13 +216,84 @@
             // EmployeedataGridView
             // 
             EmployeedataGridView.BackgroundColor = SystemColors.ActiveCaption;
-            EmployeedataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            EmployeedataGridView.Location = new Point(12, 417);
+            EmployeedataGridView.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
+            dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle1.BackColor = SystemColors.HotTrack;
+            dataGridViewCellStyle1.Font = new Font("Century Gothic", 10.2F, FontStyle.Regular, GraphicsUnit.Point);
+            dataGridViewCellStyle1.ForeColor = Color.White;
+            dataGridViewCellStyle1.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = DataGridViewTriState.True;
+            EmployeedataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            EmployeedataGridView.ColumnHeadersHeight = 30;
+            EmployeedataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
+            EmployeedataGridView.Columns.AddRange(new DataGridViewColumn[] { EmpId, EmpName, EmpSalary, EmpCity });
+            dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = Color.FromArgb(45, 66, 91);
+            dataGridViewCellStyle2.Font = new Font("Century Gothic", 10.2F, FontStyle.Regular, GraphicsUnit.Point);
+            dataGridViewCellStyle2.ForeColor = Color.White;
+            dataGridViewCellStyle2.SelectionBackColor = Color.SteelBlue;
+            dataGridViewCellStyle2.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = DataGridViewTriState.False;
+            EmployeedataGridView.DefaultCellStyle = dataGridViewCellStyle2;
+            EmployeedataGridView.EnableHeadersVisualStyles = false;
+            EmployeedataGridView.Location = new Point(31, 417);
             EmployeedataGridView.Name = "EmployeedataGridView";
+            EmployeedataGridView.RowHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
+            dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle3.BackColor = Color.FromArgb(45, 66, 91);
+            dataGridViewCellStyle3.Font = new Font("Century Gothic", 10.2F, FontStyle.Regular, GraphicsUnit.Point);
+            dataGridViewCellStyle3.ForeColor = Color.White;
+            dataGridViewCellStyle3.SelectionBackColor = Color.SteelBlue;
+            dataGridViewCellStyle3.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle3.WrapMode = DataGridViewTriState.True;
+            EmployeedataGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
+            EmployeedataGridView.RowHeadersVisible = false;
             EmployeedataGridView.RowHeadersWidth = 51;
+            dataGridViewCellStyle4.BackColor = Color.FromArgb(45, 66, 91);
+            dataGridViewCellStyle4.Font = new Font("Century Gothic", 10.2F, FontStyle.Regular, GraphicsUnit.Point);
+            dataGridViewCellStyle4.ForeColor = Color.White;
+            dataGridViewCellStyle4.SelectionBackColor = Color.SteelBlue;
+            dataGridViewCellStyle4.SelectionForeColor = Color.White;
+            EmployeedataGridView.RowsDefaultCellStyle = dataGridViewCellStyle4;
             EmployeedataGridView.RowTemplate.Height = 29;
-            EmployeedataGridView.Size = new Size(935, 143);
+            EmployeedataGridView.Size = new Size(899, 143);
             EmployeedataGridView.TabIndex = 11;
+            // 
+            // EmpId
+            // 
+            EmpId.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+            EmpId.DataPropertyName = "empId";
+            EmpId.HeaderText = "Id";
+            EmpId.MinimumWidth = 6;
+            EmpId.Name = "EmpId";
+            EmpId.Width = 54;
+            // 
+            // EmpName
+            // 
+            EmpName.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            EmpName.DataPropertyName = "empName";
+            EmpName.HeaderText = "Name";
+            EmpName.MinimumWidth = 6;
+            EmpName.Name = "EmpName";
+            // 
+            // EmpSalary
+            // 
+            EmpSalary.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+            EmpSalary.DataPropertyName = "empSalary";
+            EmpSalary.HeaderText = "Salary";
+            EmpSalary.MinimumWidth = 6;
+            EmpSalary.Name = "EmpSalary";
+            EmpSalary.Width = 85;
+            // 
+            // EmpCity
+            // 
+            EmpCity.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+            EmpCity.DataPropertyName = "empCity";
+            EmpCity.HeaderText = "City";
+            EmpCity.MinimumWidth = 6;
+            EmpCity.Name = "EmpCity";
+            EmpCity.Width = 69;
             // 
             // EmployeeForm
             // 
@@ -222,7 +301,7 @@
             AutoScaleMode = AutoScaleMode.Font;
             AutoSizeMode = AutoSizeMode.GrowAndShrink;
             BackColor = Color.Teal;
-            ClientSize = new Size(958, 573);
+            ClientSize = new Size(962, 593);
             Controls.Add(EmployeedataGridView);
             Controls.Add(label2);
             Controls.Add(txtSearchId);
@@ -261,5 +340,9 @@
         private TextBox txtSearchId;
         private Label label2;
         private DataGridView EmployeedataGridView;
+        private DataGridViewTextBoxColumn EmpId;
+        private DataGridViewTextBoxColumn EmpName;
+        private DataGridViewTextBoxColumn EmpSalary;
+        private DataGridViewTextBoxColumn EmpCity;
     }
 }
