@@ -11,7 +11,7 @@ namespace WinFormsApp1
         {
             InitializeComponent();
             DataTable dt = GetDataFromDB();
-            EmployeedataGridView.AutoGenerateColumns = false; 
+            EmployeedataGridView.AutoGenerateColumns = false;
             EmployeedataGridView.DataSource = dt;
         }
 
@@ -24,7 +24,7 @@ namespace WinFormsApp1
 
             if (IsAlreadyExit(empId))
             {
-                MessageBox.Show("Employee already exit!");               
+                MessageBox.Show("Employee already exit!");
                 txtId.Focus();
             }
             else
@@ -74,7 +74,7 @@ namespace WinFormsApp1
                         // Add parameters
                         command.Parameters.AddWithValue("@empId", id);
                         command.Parameters.AddWithValue("@empName", name);
-                       
+
                         command.Parameters.AddWithValue("@empSalary", salary);
                         command.Parameters.AddWithValue("@empCity", city);
 
@@ -110,13 +110,49 @@ namespace WinFormsApp1
             {
                 connection.Open();
                 string query = "select * from EmployeeDetails";
-                SqlDataAdapter adapter = new SqlDataAdapter(query,connection);
+                SqlDataAdapter adapter = new SqlDataAdapter(query, connection);
                 adapter.Fill(dt);
                 return dt;
             }
             catch (Exception ex) { Console.WriteLine(ex.Message); }
             finally { connection.Close(); }
             return dt;
+        }
+
+        private void btnFindEmp_Click(object sender, EventArgs e)
+        {
+            string empId = txtSearchId.Text;
+
+            if (IsAlreadyExit(empId))
+            {
+                SqlConnection connection = new SqlConnection(connectionString);
+                try
+                {
+                    connection.Open();
+                    string query = "select * from EmployeeDetails where empId =@empId";
+                    SqlCommand command = new SqlCommand(query, connection);
+                    command.Parameters.AddWithValue("@empId", empId);
+                    SqlDataReader reader = command.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        txtId.Text = reader["empId"].ToString();
+                        txtName.Text = reader["empName"].ToString();
+                        txtSalary.Text = reader["empSalary"].ToString();
+                        txtCity.Text = reader["empCity"].ToString();
+                    }
+                    txtId.ReadOnly = true;
+                    btnSave.Enabled = false;
+                }
+                catch (Exception ex) { Console.WriteLine(ex.Message); }
+                finally { connection.Close(); }
+
+                txtId.Focus();
+            }
+            else
+            {
+                MessageBox.Show("Invaild or not found!");
+                txtId.Focus();
+            }
         }
     }
 }

@@ -45,7 +45,7 @@
             btnSave = new Button();
             btnDelete = new Button();
             btnUpdate = new Button();
-            button4 = new Button();
+            btnFindEmp = new Button();
             txtSearchId = new TextBox();
             label2 = new Label();
             EmployeedataGridView = new DataGridView();
@@ -185,14 +185,15 @@
             btnUpdate.Text = "Update";
             btnUpdate.UseVisualStyleBackColor = true;
             // 
-            // button4
+            // btnFindEmp
             // 
-            button4.Location = new Point(660, 373);
-            button4.Name = "button4";
-            button4.Size = new Size(124, 29);
-            button4.TabIndex = 5;
-            button4.Text = "Find Employee";
-            button4.UseVisualStyleBackColor = true;
+            btnFindEmp.Location = new Point(660, 373);
+            btnFindEmp.Name = "btnFindEmp";
+            btnFindEmp.Size = new Size(124, 29);
+            btnFindEmp.TabIndex = 5;
+            btnFindEmp.Text = "Find Employee";
+            btnFindEmp.UseVisualStyleBackColor = true;
+            btnFindEmp.Click += btnFindEmp_Click;
             // 
             // txtSearchId
             // 
@@ -305,7 +306,7 @@
             Controls.Add(EmployeedataGridView);
             Controls.Add(label2);
             Controls.Add(txtSearchId);
-            Controls.Add(button4);
+            Controls.Add(btnFindEmp);
             Controls.Add(btnUpdate);
             Controls.Add(btnDelete);
             Controls.Add(btnSave);
@@ -336,7 +337,7 @@
         private Button btnSave;
         private Button btnDelete;
         private Button btnUpdate;
-        private Button button4;
+        private Button btnFindEmp;
         private TextBox txtSearchId;
         private Label label2;
         private DataGridView EmployeedataGridView;
