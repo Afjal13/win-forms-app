@@ -145,13 +145,11 @@ namespace WinFormsApp1
                 }
                 catch (Exception ex) { Console.WriteLine(ex.Message); }
                 finally { connection.Close(); }
-
-                txtId.Focus();
             }
             else
             {
                 MessageBox.Show("Invaild or not found!");
-                txtId.Focus();
+                txtSearchId.Focus();
             }
         }
     }
