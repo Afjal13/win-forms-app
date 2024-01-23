@@ -77,57 +77,6 @@ namespace WinFormsApp1
             }
         }
 
-        //private void btnSave_Click(object sender, EventArgs e)
-        //{
-        //    try
-        //    {
-        //        string empId=string.Empty;
-        //        string empName = string.Empty;
-        //        int empSalary = 0;
-        //        string empCity = string.Empty;
-
-        //        if (string.IsNullOrEmpty(txtId.Text))
-        //            empId = txtId.Text;
-        //        else
-        //        {
-        //            MessageBox.Show("Id is null or empty.");
-        //            txtId.Focus();                   
-        //        }            
-
-
-        //        if (!string.IsNullOrEmpty(txtName.Text))
-        //            empName = txtName.Text;
-        //        else
-        //            MessageBox.Show("Name is null or empty.");
-
-        //        if (Convert.ToInt32(txtSalary.Text)!=0)
-        //            empSalary = Convert.ToInt32(txtSalary.Text);
-        //        else
-        //            MessageBox.Show("Salary is null or empty.");
-
-        //        if (!string.IsNullOrEmpty(txtCity.Text))
-        //            empCity = txtCity.Text;
-        //        else
-        //            MessageBox.Show("City is null or empty.");
-
-
-        //        if (IsAlreadyExit(empId))
-        //        {
-        //            MessageBox.Show("Employee already exit!");
-        //            txtId.Focus();
-        //        }
-        //        else
-        //        {
-        //            AddEmployee(empId, empName, empSalary, empCity);
-        //            MessageBox.Show("Add Successful!");
-        //            ClearField();
-        //            txtId.Focus();
-        //        }
-        //    }
-        //    catch(Exception ex) { MessageBox.Show(ex.ToString()); }
-
-        //}
-
         private bool IsAlreadyExit(string id)
         {
             SqlConnection connection = new SqlConnection(connectionString);
@@ -243,18 +192,6 @@ namespace WinFormsApp1
                 MessageBox.Show("Invaild or not found!");
                 txtSearchId.Focus();
             }
-        }
-
-        private string CheckEmptyField()
-        {
-            string input = Interaction.InputBox("Enter your user name:", "User Name", "");
-
-            if (string.IsNullOrEmpty(input))
-            {
-                MessageBox.Show("User name cannot be empty. Please try again.");
-            }
-
-            return input;
-        }
+        }   
     }
 }
