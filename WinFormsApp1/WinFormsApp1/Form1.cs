@@ -1,5 +1,8 @@
+using Microsoft.VisualBasic;
+using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
+using System.Windows.Forms;
 
 namespace WinFormsApp1
 {
@@ -9,32 +12,121 @@ namespace WinFormsApp1
 
         public EmployeeForm()
         {
-            InitializeComponent();
+            InitializeComponent();         
             DataTable dt = GetDataFromDB();
             EmployeedataGridView.AutoGenerateColumns = false;
             EmployeedataGridView.DataSource = dt;
         }
-
+       
         private void btnSave_Click(object sender, EventArgs e)
         {
-            string empId = txtId.Text;
-            string empName = txtName.Text;
-            int empSalary = Convert.ToInt32(txtSalary.Text);
-            string empCity = txtCity.Text;
+            try
+            {
+                string empId = txtId.Text.Trim();
+                string empName = txtName.Text.Trim();
+                int empSalary = 0;
+                string empCity = txtCity.Text.Trim();
 
-            if (IsAlreadyExit(empId))
-            {
-                MessageBox.Show("Employee already exit!");
-                txtId.Focus();
+                if (string.IsNullOrEmpty(empId))
+                {
+                    MessageBox.Show(txtId,"Id is required.");
+                    txtId.Focus();
+                    return;
+                }             
+
+                if (string.IsNullOrEmpty(empName))
+                {
+                    MessageBox.Show(txtName, "Name is required.");
+                    txtName.Focus();
+                    return;
+                }               
+
+                if (!int.TryParse(txtSalary.Text, out empSalary) || empSalary == 0)
+                {
+                    MessageBox.Show(txtSalary, "Invalid or empty salary. Please enter a valid number.");
+                    txtSalary.Focus();
+                    return;
+                }
+
+                if (string.IsNullOrEmpty(empCity))
+                {
+                    MessageBox.Show(txtCity, "City is required.");
+                    txtCity.Focus();
+                    return;
+                }              
+
+                if (IsAlreadyExit(empId))
+                {
+                    MessageBox.Show("Employee already exists!");
+                    txtId.Focus();
+                }
+                else
+                {
+                    AddEmployee(empId, empName, empSalary, empCity);
+                    MessageBox.Show("Add Successful!");
+                    DataTable dt = GetDataFromDB();
+                    EmployeedataGridView.AutoGenerateColumns = false;
+                    EmployeedataGridView.DataSource = dt;
+                    ClearField();
+                    txtId.Focus();
+                }
             }
-            else
+            catch (Exception ex)
             {
-                AddEmployee(empId, empName, empSalary, empCity);
-                MessageBox.Show("Add Successful!");
-                ClearField();
-                txtId.Focus();
+                MessageBox.Show(ex.ToString());
             }
         }
+
+        //private void btnSave_Click(object sender, EventArgs e)
+        //{
+        //    try
+        //    {
+        //        string empId=string.Empty;
+        //        string empName = string.Empty;
+        //        int empSalary = 0;
+        //        string empCity = string.Empty;
+
+        //        if (string.IsNullOrEmpty(txtId.Text))
+        //            empId = txtId.Text;
+        //        else
+        //        {
+        //            MessageBox.Show("Id is null or empty.");
+        //            txtId.Focus();                   
+        //        }            
+
+
+        //        if (!string.IsNullOrEmpty(txtName.Text))
+        //            empName = txtName.Text;
+        //        else
+        //            MessageBox.Show("Name is null or empty.");
+
+        //        if (Convert.ToInt32(txtSalary.Text)!=0)
+        //            empSalary = Convert.ToInt32(txtSalary.Text);
+        //        else
+        //            MessageBox.Show("Salary is null or empty.");
+
+        //        if (!string.IsNullOrEmpty(txtCity.Text))
+        //            empCity = txtCity.Text;
+        //        else
+        //            MessageBox.Show("City is null or empty.");
+
+
+        //        if (IsAlreadyExit(empId))
+        //        {
+        //            MessageBox.Show("Employee already exit!");
+        //            txtId.Focus();
+        //        }
+        //        else
+        //        {
+        //            AddEmployee(empId, empName, empSalary, empCity);
+        //            MessageBox.Show("Add Successful!");
+        //            ClearField();
+        //            txtId.Focus();
+        //        }
+        //    }
+        //    catch(Exception ex) { MessageBox.Show(ex.ToString()); }
+
+        //}
 
         private bool IsAlreadyExit(string id)
         {
@@ -151,6 +243,18 @@ namespace WinFormsApp1
                 MessageBox.Show("Invaild or not found!");
                 txtSearchId.Focus();
             }
+        }
+
+        private string CheckEmptyField()
+        {
+            string input = Interaction.InputBox("Enter your user name:", "User Name", "");
+
+            if (string.IsNullOrEmpty(input))
+            {
+                MessageBox.Show("User name cannot be empty. Please try again.");
+            }
+
+            return input;
         }
     }
 }
