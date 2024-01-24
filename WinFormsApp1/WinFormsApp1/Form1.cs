@@ -143,7 +143,7 @@ namespace WinFormsApp1
                 try
                 {
                     connection.Open();
-                    
+
                     string insertQuery = "Update EmployeeDetails set empName=@empName,empSalary=@empSalary,empCity=@empCity where empId=@empId";
 
                     using (SqlCommand command = new SqlCommand(insertQuery, connection))
@@ -155,13 +155,51 @@ namespace WinFormsApp1
                         command.Parameters.AddWithValue("@empId", id);
                         // Execute the update query
                         int rowAffected = command.ExecuteNonQuery();
-                        if(rowAffected > 0) { 
-                            MessageBox.Show("Update seccessful!"); 
+                        if (rowAffected > 0)
+                        {
+                            MessageBox.Show("Update seccessful!");
                             DataTable dt = GetDataFromDB();
                             EmployeedataGridView.AutoGenerateColumns = false;
-                            EmployeedataGridView.DataSource = dt; ClearField(); 
+                            EmployeedataGridView.DataSource = dt; ClearField();
                         }
                         else { MessageBox.Show("Update failed!"); }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
+                finally
+                {
+                    connection.Close();
+                }
+            }
+        }
+
+        private void DeleteEmployeeRecord(string id)
+        {
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                try
+                {
+                    connection.Open();
+
+                    string insertQuery = "Delete EmployeeDetails where empId=@empId";
+
+                    using (SqlCommand command = new SqlCommand(insertQuery, connection))
+                    {
+                        // Add parameters                    
+                        command.Parameters.AddWithValue("@empId", id);
+                        // Execute the update query
+                        int rowAffected = command.ExecuteNonQuery();
+                        if (rowAffected > 0)
+                        {
+                            MessageBox.Show("Delete seccessful!");
+                            DataTable dt = GetDataFromDB();
+                            EmployeedataGridView.AutoGenerateColumns = false;
+                            EmployeedataGridView.DataSource = dt; ClearField();
+                        }
+                        else { MessageBox.Show("Delete failed. EmployeeId not found or other issue."); }
                     }
                 }
                 catch (Exception ex)
@@ -240,7 +278,13 @@ namespace WinFormsApp1
             int empSalary = Convert.ToInt32(txtSalary.Text);
             string empCity = txtCity.Text.Trim();
 
-            UpdateEmployeeDetails(empId,empName,empSalary,empCity);
+            UpdateEmployeeDetails(empId, empName, empSalary, empCity);
+        }
+
+        private void btnDelete_Click(object sender, EventArgs e)
+        {
+            string empId = txtId.Text.Trim();
+            DeleteEmployeeRecord(empId);
         }
     }
 }
