@@ -1,4 +1,5 @@
 using Microsoft.VisualBasic;
+using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
@@ -12,12 +13,12 @@ namespace WinFormsApp1
 
         public EmployeeForm()
         {
-            InitializeComponent();         
+            InitializeComponent();
             DataTable dt = GetDataFromDB();
             EmployeedataGridView.AutoGenerateColumns = false;
             EmployeedataGridView.DataSource = dt;
         }
-       
+
         private void btnSave_Click(object sender, EventArgs e)
         {
             try
@@ -29,17 +30,17 @@ namespace WinFormsApp1
 
                 if (string.IsNullOrEmpty(empId))
                 {
-                    MessageBox.Show(txtId,"Id is required.");
+                    MessageBox.Show(txtId, "Id is required.");
                     txtId.Focus();
                     return;
-                }             
+                }
 
                 if (string.IsNullOrEmpty(empName))
                 {
                     MessageBox.Show(txtName, "Name is required.");
                     txtName.Focus();
                     return;
-                }               
+                }
 
                 if (!int.TryParse(txtSalary.Text, out empSalary) || empSalary == 0)
                 {
@@ -53,7 +54,7 @@ namespace WinFormsApp1
                     MessageBox.Show(txtCity, "City is required.");
                     txtCity.Focus();
                     return;
-                }              
+                }
 
                 if (IsAlreadyExit(empId))
                 {
@@ -135,6 +136,44 @@ namespace WinFormsApp1
             }
         }
 
+        private void UpdateEmployeeDetails(string id, string name, int salary, string city)
+        {
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                try
+                {
+                    connection.Open();
+                    
+                    string insertQuery = "Update EmployeeDetails set empName=@empName,empSalary=@empSalary,empCity=@empCity where empId=@empId";
+
+                    using (SqlCommand command = new SqlCommand(insertQuery, connection))
+                    {
+                        // Add parameters                    
+                        command.Parameters.AddWithValue("@empName", name);
+                        command.Parameters.AddWithValue("@empSalary", salary);
+                        command.Parameters.AddWithValue("@empCity", city);
+                        command.Parameters.AddWithValue("@empId", id);
+                        // Execute the update query
+                        int rowAffected = command.ExecuteNonQuery();
+                        if(rowAffected > 0) { 
+                            MessageBox.Show("Update seccessful!"); 
+                            DataTable dt = GetDataFromDB();
+                            EmployeedataGridView.AutoGenerateColumns = false;
+                            EmployeedataGridView.DataSource = dt; ClearField(); 
+                        }
+                        else { MessageBox.Show("Update failed!"); }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
+                finally
+                {
+                    connection.Close();
+                }
+            }
+        }
         private void ClearField()
         {
             txtId.Text = string.Empty;
@@ -192,6 +231,16 @@ namespace WinFormsApp1
                 MessageBox.Show("Invaild or not found!");
                 txtSearchId.Focus();
             }
-        }   
+        }
+
+        private void btnUpdate_Click(object sender, EventArgs e)
+        {
+            string empId = txtId.Text.Trim();
+            string empName = txtName.Text.Trim();
+            int empSalary = Convert.ToInt32(txtSalary.Text);
+            string empCity = txtCity.Text.Trim();
+
+            UpdateEmployeeDetails(empId,empName,empSalary,empCity);
+        }
     }
 }
