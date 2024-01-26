@@ -103,113 +103,94 @@ namespace WinFormsApp1
 
         private void AddEmployee(string id, string name, int salary, string city)
         {
-            using (SqlConnection connection = new SqlConnection(connectionString))
+            SqlConnection connection = new SqlConnection(connectionString);
+            try
             {
-                try
-                {
-                    connection.Open();
+                connection.Open();
+                string insertQuery = "INSERT INTO EmployeeDetails (empId, empName, empSalary,empCity) VALUES (@empId, @empName, @empSalary,@empCity)";
+                SqlCommand command = new SqlCommand(insertQuery, connection);
+                // Add parameters
+                command.Parameters.AddWithValue("@empId", id);
+                command.Parameters.AddWithValue("@empName", name);
+                command.Parameters.AddWithValue("@empSalary", salary);
+                command.Parameters.AddWithValue("@empCity", city);
+                // Execute the query
+                command.ExecuteNonQuery();
 
-                    string insertQuery = "INSERT INTO EmployeeDetails (empId, empName, empSalary,empCity) VALUES (@empId, @empName, @empSalary,@empCity)";
-
-                    using (SqlCommand command = new SqlCommand(insertQuery, connection))
-                    {
-                        // Add parameters
-                        command.Parameters.AddWithValue("@empId", id);
-                        command.Parameters.AddWithValue("@empName", name);
-
-                        command.Parameters.AddWithValue("@empSalary", salary);
-                        command.Parameters.AddWithValue("@empCity", city);
-
-                        // Execute the query
-                        command.ExecuteNonQuery();
-                        //Application.Exit();
-                    }
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine(ex.Message);
-                }
-                finally
-                {
-                    connection.Close();
-                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+            finally
+            {
+                connection.Close();
             }
         }
 
         private void UpdateEmployeeDetails(string id, string name, int salary, string city)
         {
-            using (SqlConnection connection = new SqlConnection(connectionString))
+            SqlConnection connection = new SqlConnection(connectionString);
+
+            try
             {
-                try
+                connection.Open();
+                string insertQuery = "Update EmployeeDetails set empName=@empName,empSalary=@empSalary,empCity=@empCity where empId=@empId";
+                SqlCommand command = new SqlCommand(insertQuery, connection);
+                // Add parameters                    
+                command.Parameters.AddWithValue("@empName", name);
+                command.Parameters.AddWithValue("@empSalary", salary);
+                command.Parameters.AddWithValue("@empCity", city);
+                command.Parameters.AddWithValue("@empId", id);
+                // Execute the update query
+                int rowAffected = command.ExecuteNonQuery();
+                if (rowAffected > 0)
                 {
-                    connection.Open();
-
-                    string insertQuery = "Update EmployeeDetails set empName=@empName,empSalary=@empSalary,empCity=@empCity where empId=@empId";
-
-                    using (SqlCommand command = new SqlCommand(insertQuery, connection))
-                    {
-                        // Add parameters                    
-                        command.Parameters.AddWithValue("@empName", name);
-                        command.Parameters.AddWithValue("@empSalary", salary);
-                        command.Parameters.AddWithValue("@empCity", city);
-                        command.Parameters.AddWithValue("@empId", id);
-                        // Execute the update query
-                        int rowAffected = command.ExecuteNonQuery();
-                        if (rowAffected > 0)
-                        {
-                            MessageBox.Show("Update seccessful!");
-                            DataTable dt = GetDataFromDB();
-                            EmployeedataGridView.AutoGenerateColumns = false;
-                            EmployeedataGridView.DataSource = dt; ClearField();
-                        }
-                        else { MessageBox.Show("Update failed!"); }
-                    }
+                    MessageBox.Show("Update seccessful!");
+                    DataTable dt = GetDataFromDB();
+                    EmployeedataGridView.AutoGenerateColumns = false;
+                    EmployeedataGridView.DataSource = dt; ClearField();
                 }
-                catch (Exception ex)
-                {
-                    Console.WriteLine(ex.Message);
-                }
-                finally
-                {
-                    connection.Close();
-                }
+                else { MessageBox.Show("Update failed!"); }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+            finally
+            {
+                connection.Close();
             }
         }
 
         private void DeleteEmployeeRecord(string id)
         {
-            using (SqlConnection connection = new SqlConnection(connectionString))
+            SqlConnection connection = new SqlConnection(connectionString);
+            try
             {
-                try
+                connection.Open();
+                string insertQuery = "Delete EmployeeDetails where empId=@empId";
+                SqlCommand command = new SqlCommand(insertQuery, connection);
+                // Add parameters                    
+                command.Parameters.AddWithValue("@empId", id);
+                // Execute the update query
+                int rowAffected = command.ExecuteNonQuery();
+                if (rowAffected > 0)
                 {
-                    connection.Open();
-
-                    string insertQuery = "Delete EmployeeDetails where empId=@empId";
-
-                    using (SqlCommand command = new SqlCommand(insertQuery, connection))
-                    {
-                        // Add parameters                    
-                        command.Parameters.AddWithValue("@empId", id);
-                        // Execute the update query
-                        int rowAffected = command.ExecuteNonQuery();
-                        if (rowAffected > 0)
-                        {
-                            MessageBox.Show("Delete seccessful!");
-                            DataTable dt = GetDataFromDB();
-                            EmployeedataGridView.AutoGenerateColumns = false;
-                            EmployeedataGridView.DataSource = dt; ClearField();
-                        }
-                        else { MessageBox.Show("Delete failed. EmployeeId not found or other issue."); }
-                    }
+                    MessageBox.Show("Delete seccessful!");
+                    DataTable dt = GetDataFromDB();
+                    EmployeedataGridView.AutoGenerateColumns = false;
+                    EmployeedataGridView.DataSource = dt; ClearField();
                 }
-                catch (Exception ex)
-                {
-                    Console.WriteLine(ex.Message);
-                }
-                finally
-                {
-                    connection.Close();
-                }
+                else { MessageBox.Show("Delete failed. EmployeeId not found or other issue."); }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+            finally
+            {
+                connection.Close();
             }
         }
         private void ClearField()
@@ -240,7 +221,6 @@ namespace WinFormsApp1
         private void btnFindEmp_Click(object sender, EventArgs e)
         {
             string empId = txtSearchId.Text;
-
             if (IsAlreadyExit(empId))
             {
                 SqlConnection connection = new SqlConnection(connectionString);
@@ -277,7 +257,6 @@ namespace WinFormsApp1
             string empName = txtName.Text.Trim();
             int empSalary = Convert.ToInt32(txtSalary.Text);
             string empCity = txtCity.Text.Trim();
-
             UpdateEmployeeDetails(empId, empName, empSalary, empCity);
         }
 
