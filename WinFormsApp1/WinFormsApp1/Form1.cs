@@ -193,6 +193,7 @@ namespace WinFormsApp1
                 connection.Close();
             }
         }
+
         private void ClearField()
         {
             txtId.Text = string.Empty;
