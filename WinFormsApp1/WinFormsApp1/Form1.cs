@@ -4,6 +4,7 @@ using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 using System.Windows.Forms;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace WinFormsApp1
 {
@@ -152,6 +153,7 @@ namespace WinFormsApp1
                     EmployeedataGridView.DataSource = dt; ClearField();
                 }
                 else { MessageBox.Show("Update failed!"); }
+               
             }
             catch (Exception ex)
             {
@@ -160,6 +162,10 @@ namespace WinFormsApp1
             finally
             {
                 connection.Close();
+                txtId.ReadOnly = false;
+                txtId.BackColor = System.Drawing.Color.White;
+                btnSave.Enabled = true;
+                btnSave.BackColor = System.Drawing.Color.White;
             }
         }
 
@@ -191,6 +197,11 @@ namespace WinFormsApp1
             finally
             {
                 connection.Close();
+                txtId.ReadOnly = false;
+                txtId.BackColor = System.Drawing.Color.White;
+                btnSave.Enabled = true;
+                btnSave.BackColor = System.Drawing.Color.White;
+              
             }
         }
 
@@ -200,6 +211,7 @@ namespace WinFormsApp1
             txtName.Text = string.Empty;
             txtSalary.Text = string.Empty;
             txtCity.Text = string.Empty;
+            txtSearchId.Text = string.Empty;
         }
 
         private DataTable GetDataFromDB()
@@ -240,7 +252,9 @@ namespace WinFormsApp1
                         txtCity.Text = reader["empCity"].ToString();
                     }
                     txtId.ReadOnly = true;
+                    txtId.BackColor = System.Drawing.Color.SlateGray;                  
                     btnSave.Enabled = false;
+                    btnSave.BackColor = System.Drawing.Color.Gray;                   
                 }
                 catch (Exception ex) { Console.WriteLine(ex.Message); }
                 finally { connection.Close(); }
