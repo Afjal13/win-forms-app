@@ -1,5 +1,5 @@
-# Windows CRUD Operation <br/>
-#### (using C# .Net Window Application with MSSQL)<br/>
+# CRUD Operation <br/>
+#### (using C# .Net Window Form Application with MSSQL)<br/>
 ## Employee Record Form<br/>
 ### Initial Form:
  ![1](https://github.com/Afjal13/win-forms-app/assets/32141447/11cea535-ce78-4efc-af74-4c5e1eaab14c)
