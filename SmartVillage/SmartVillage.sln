@@ -1,0 +1,42 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.8.34330.188
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "SmartVillage", "SmartVillage\", "{4E0CEEC6-E927-43B3-9CF6-26867A814D30}"
+	ProjectSection(WebsiteProperties) = preProject
+		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.7.2"
+		Debug.AspNetCompiler.VirtualPath = "/localhost_59818"
+		Debug.AspNetCompiler.PhysicalPath = "SmartVillage\"
+		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_59818\"
+		Debug.AspNetCompiler.Updateable = "true"
+		Debug.AspNetCompiler.ForceOverwrite = "true"
+		Debug.AspNetCompiler.FixedNames = "false"
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.VirtualPath = "/localhost_59818"
+		Release.AspNetCompiler.PhysicalPath = "SmartVillage\"
+		Release.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_59818\"
+		Release.AspNetCompiler.Updateable = "true"
+		Release.AspNetCompiler.ForceOverwrite = "true"
+		Release.AspNetCompiler.FixedNames = "false"
+		Release.AspNetCompiler.Debug = "False"
+		VWDPort = "59818"
+		SlnRelativePath = "SmartVillage\"
+		DefaultWebSiteLanguage = "Visual C#"
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{4E0CEEC6-E927-43B3-9CF6-26867A814D30}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4E0CEEC6-E927-43B3-9CF6-26867A814D30}.Debug|Any CPU.Build.0 = Debug|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {92A76602-F7D7-4DAF-83BC-CDA1F77B1F6F}
+	EndGlobalSection
+EndGlobal
